@@ -1,0 +1,17 @@
+.dashboard_container{
+    background: #fff;
+    height: 100vh;
+    width: 100vw;
+    /* overflow-y: hidden; */
+}
+.row{
+    display: flex;
+    flex-direction: row;
+}
+.column{
+    display: flex;
+    flex-direction: column;
+}
+.column_s_e{
+    justify-content: space-evenly;
+}
