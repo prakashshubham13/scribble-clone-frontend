@@ -14,7 +14,10 @@ const Drawbox = ({roomid,socket}) => {
     const imageData = useRef(null);
     const [timer, updateTimer] = useState(0);
     const [data, updateData] = useState('');
-    const [gameStatus, updateGameStatus] = useState('Need atleast 2 player to start');
+    const [gameStatus, updateGameStatus] = useState(0);
+    const [currentUser, selectCurrentUser] = useState(null);
+
+    const [showSelectWord, setShowSelectWord] = useState([]);
 
     const status = (code, time, data= null) => {
     let value;
@@ -58,8 +61,8 @@ const Drawbox = ({roomid,socket}) => {
         // canvas.width = window.innerWidth;
         // canvas.height = window.innerHeight;
 
-        canvas.width = 800;
-        canvas.height = 600;
+        canvas.width = 750;
+        canvas.height = 400;
 
 //   canvas.style.width ='100%';
 //   canvas.style.height='100%';
@@ -132,11 +135,21 @@ const Drawbox = ({roomid,socket}) => {
 
         socket.on('beginPath', handleBeginPath);
         socket.on('drawLine', handleDrawLine);
-        socket.on("startGame",()=>status(1,timer));
+        socket.on("startGame",()=>{});
         socket.on("timer",(time)=>updateTimer(time));
-        socket.on("select",(data)=>status(2,timer,'player1'));
-        socket.on("selecting",()=>status(3,timer));
-        socket.on("draw",()=>status(4,timer));
+        socket.on("select",(data)=>{
+            console.log("select----",data.list);
+            updateGameStatus(1);
+            setShowSelectWord(data.list);
+        });
+        socket.on("selecting",(data)=>{
+            selectCurrentUser(data.currentUser);
+            updateGameStatus(3);
+        });
+        socket.on("draw",()=>{
+            console.log("drawwwwww");
+            updateGameStatus(2);
+        });
         socket.on("getDraw",async(user)=>{
             let currentDrawing = "fghh";
             console.log("getdata");
@@ -146,7 +159,9 @@ const Drawbox = ({roomid,socket}) => {
             console.log(canvas.toDataURL());
             socket.emit("sendDraw",{newUser:user,"drawing":currentDrawing});
         });
-        socket.on("updateDraw",(data)=>{console.log(data);
+        socket.on("updateDraw",(data)=>{
+            updateGameStatus(2);
+            // console.log(data);
             var image = new Image();
 image.onload = function() {
   context.drawImage(image, 0, 0);
@@ -176,11 +191,11 @@ image.onload = function() {
 
   return (
     <div ref={containerRef} className={styles.drawbox_container}>
-    {name}
     {socket.id}
-    <br/>
-    {timer}{gameStatus}
-    {data}
+    {gameStatus !== 2 && <div className={styles.canvas_container}>
+    {gameStatus === 1 && showSelectWord.map((data)=><li>{data}</li>)}
+    {gameStatus === 3 && `${currentUser.name} is selecting word`} 
+    </div>}
       <canvas ref={drawBoardRef} style={{background:"grey"}}></canvas>
     </div>
   )

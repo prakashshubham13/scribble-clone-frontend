@@ -1,0 +1,23 @@
+.playbox_container{
+    height: 80vh;
+    width: 15vw;
+    padding: 5px;
+    background-color: rgb(226, 225, 225,0.7);
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+}
+.header{
+    background: rgba(0,0,0,0.3);
+    padding: 2px;
+    width: 100%;
+}
+.playbox_container li{
+    list-style-type: none;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(217, 214, 214);
+    margin: 4px 0;
+}

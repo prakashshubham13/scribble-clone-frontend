@@ -1,4 +1,26 @@
 .drawbox_container{
     width: 60%;
-    height: 80vh;
+    height: 50vh;
+    margin: 0 auto;
+    position: relative;
+}
+.canvas_container{
+    background: rgba(255,255,255,0.1);
+    background-color: green;
+    padding: auto;
+    position: absolute;
+    top: 0%;
+    left: 0;
+    z-index: 999;
+    width: 750px;
+    height: 400px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.canvas_container li{
+    background-color: #fff;
+    list-style-type: none;
+    padding: 4px 8px;
+    cursor: pointer;
 }

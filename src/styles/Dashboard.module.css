@@ -1,17 +1,20 @@
 .dashboard_container{
-    background: #fff;
+    /* background: #23c115; */
     height: 100vh;
     width: 100vw;
+    overflow: hidden;
     /* overflow-y: hidden; */
 }
 .row{
     display: flex;
     flex-direction: row;
+    /* background: red; */
 }
 .column{
     display: flex;
     flex-direction: column;
+    /* background: yellow; */
 }
 .column_s_e{
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
