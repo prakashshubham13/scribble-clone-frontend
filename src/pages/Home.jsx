@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect, useLayoutEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from "../styles/Home.module.css";
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,9 +16,24 @@ function generateString(length) {
     return result;
 }
 
-const Home = () => {
+const Home = ({socket}) => {
+  console.log("sfcdc");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+   
+    const[errorMssg,setErrorMssg] = useState('');
+
+    useLayoutEffect(() => {
+      console.log(socket);
+    socket.on("allow",({id,mssg})=>{
+      if(id === true){
+        navigate(`/dashboard`);
+      }else{
+        setErrorMssg(mssg);
+      }
+    });
+    }, []);
+
     const [formData, updateFormData] = useState({
       'form1_name':'',
       'form2_name':'',
@@ -31,21 +46,19 @@ const Home = () => {
     }
 
     const createRoom = () => {
-        dispatch(changeName({name: formData.form1_name}));
-        let roomid = generateString(6);
-        console.log(roomid);
-        navigate(`/dashboard/${roomid}`);
+      let roomid = generateString(6);
+      dispatch(changeName({name: formData.form1_name,room:roomid}));
+        socket.emit('createRoom',{name:formData.form1_name,room:roomid});
     }
 
     const joinRoom = () => {
-        dispatch(changeName({name: formData.form2_name}));
-        let roomid = formData.form2_code;
-        console.log(formData);
-        console.log(roomid);
-        navigate(`/dashboard/${roomid}`);
+        dispatch(changeName({name: formData.form2_name, room:formData.form2_code}));
+        socket.emit('joinRoom',{name:formData.form2_name,room:formData.form2_code});
+        navigate(`/dashboard`);
     }
   return (
     <div className={styles.form_container}>
+     {errorMssg}
      <div className={styles.form}>
      <fieldset>
      <legend>Create Room</legend>

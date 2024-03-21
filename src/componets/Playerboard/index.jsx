@@ -1,23 +1,13 @@
-import React, { useEffect, useState } from 'react';
 import styles from '../../styles/Playerboard.module.css';
-const Playerbox = ({roomid, socket}) => {
-  const [playerList, updattePlayerList] = useState([
-    {name:"dcsdc",score:31},
-    {name:"dcsdc",score:31},
-    {name:"dcsdc",score:31},
-    {name:"dcsdc",score:31},
-    {name:"dcsdc",score:31}
-  ]);
-  useEffect(()=>{
-    socket.on("updatePlayerList",(data)=>{
-      console.log(data);
-      updattePlayerList(data);
-    })
-  },[]);
+import { useSelector } from 'react-redux';
+
+const Playerbox = ({socket}) => {
+  const playerList = useSelector((state)=>state.player.playerList);
+  const hostDetail = useSelector((state)=>state.game.host);
   return (
     <div className={styles.playbox_container}>
       <div className={styles.header}>Playerbox</div>
-      {playerList.map((data)=><li className={styles.header}>
+      {playerList.map((data)=><li className={`${data.guess ? styles.success : ''} ${hostDetail.id === data.id ? styles.host : styles.a} ${data.id === socket.id ? styles.user : ''}`} key={data.id}>
       <div>{data.name}</div>
       <div>{data.score}</div>
       </li>)}

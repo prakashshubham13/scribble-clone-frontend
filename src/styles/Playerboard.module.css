@@ -21,3 +21,12 @@
     background: rgb(217, 214, 214);
     margin: 4px 0;
 }
+.success{
+    background: greenyellow !important;
+}
+.host{
+    background: rgba(0,0,200,0.7) !important;
+}
+.user{
+    font-weight: 900;
+}

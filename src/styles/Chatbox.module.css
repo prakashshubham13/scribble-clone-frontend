@@ -46,6 +46,10 @@ width: 100%;
     outline: 1px solid #13a987;
 }
 
+.chatbox_container textarea{
+    resize: none;
+}
+
 .chatbox_container button{
     background: transparent;
     padding: 10px;

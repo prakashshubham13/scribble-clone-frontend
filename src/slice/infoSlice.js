@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-name:'dsd'
+name:'dsd',
+room: null
 };
 
 export const infoSlice = createSlice({
@@ -11,6 +12,11 @@ reducers:{
     changeName: (state,action)=> {
         console.log(action);
         state.name = action.payload.name;
+        state.room = action.payload.room;
+    }, 
+    changeGameStatus: (state,action)=> {
+        console.log(action);
+        state.staus = action.payload.status;
     } 
 }
 });

@@ -1,9 +1,13 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useRef} from 'react'
 import {socket} from '../../utils/socket.js'
 import styles from '../../styles/InfoBoard.module.css'
+import { useSelector } from 'react-redux';
 
 
 const Infobox = () => {
+  const hint = useSelector((state)=>state.game.hint);
+  const round = useSelector((state)=>state.game.round);
+  const room = useSelector((state)=>state.info.room);
   const status = (code, time, data= null) => {
     let value;
     switch(code){
@@ -43,11 +47,16 @@ const [timer, updateTimer] = useState(0);
     socket.on("selecting",()=>status(3,timer));
     // socket.on("draw",()=>status(4,timer));
   }, [])
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(room);
+  };
+
   return (
     <div className={styles.infonox_container}>
-    <div>Rank</div>
-    <div>{gameStatus}</div>
-      <div>{60 - timer}/60 seconds</div>
+    <div>{round}/5</div>
+    <div>{hint}</div>
+      <div>{60 - timer}seconds left</div>
+      <button onClick={copyToClipboard}>{room}</button>
     </div>
   )
 }

@@ -7,26 +7,33 @@ import Chatbox from '../componets/Chatboard';
 import { useParams,useNavigate } from 'react-router-dom';
 import { socket } from '../utils/socket';
 import { useSelector } from 'react-redux';
+import { updateGameStatusCode, updateHint, updateHost } from '../slice/gameSlice';
+import { UseSelector, useDispatch } from 'react-redux';
+import { updatePlayerList } from '../slice/playerSlice';
 
 const Dashboard = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {roomid} = useParams();
     const name = useSelector((state)=>state.info.name);
-    useLayoutEffect(() => {
-      if(!roomid || !name)
+    const room = useSelector((state)=>state.info.room);
+    useEffect(() => {
+    socket.on('dissolveRoom',()=>{
       navigate('/');
-      return () => {
-        socket.emit("leaveRoom",{userId:socket.id,room:roomid});
-      };
+    });
+    if(!room || !name)
+    navigate('/');
+    return () => {
+    socket.emit("leaveRoom",{userId:socket.id,room:room});
+    };
     }, []);
   return (
     <div className={styles.dashboard_container}>
       <div className={styles.column}>
       <Infobox/>
       <div className={`${styles.row} ${styles.column_s_e}`}>
-      <Playerbox roomid={roomid} socket = {socket}/>
-      <Drawbox roomid={roomid} socket = {socket}/>
-      <Chatbox roomid={roomid} socket = {socket}/>
+      <Playerbox socket={socket}/>
+      <Drawbox room={room} socket = {socket}/>
+      <Chatbox room={room} socket = {socket}/>
       </div>
       </div>
     </div>

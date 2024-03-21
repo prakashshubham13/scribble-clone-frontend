@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styles from "../../styles/Chatbox.module.css";
 import { UseSelector, useSelector } from 'react-redux';
 
-const Chatbox = ({roomid,socket}) => {
+const Chatbox = ({room,socket}) => {
   const name = useSelector((state)=>state.info.name);
   const chatboxRef = useRef(null);
   const [textData, updateTextData] = useState('');
@@ -18,7 +18,16 @@ socket.on('recieveChat',(data)=>{
 });
   },[]);
   const emitSend = () => {
-    socket.emit("sendChat",{room:roomid,senderId:socket.id,senderName:name,mssg:textData});
+    updateTextData('');
+    socket.emit("sendChat",{room:room,senderId:socket.id,senderName:name,mssg:textData});
+  }
+  const updateText = (e) => {
+    console.log(e);
+    updateTextData(e.target.value);
+  }
+  const handleKeyDown = (e) => {
+    if(e.key === 'Enter')
+    emitSend();
   }
   useEffect(()=>{
     console.log(chatboxRef.current.scrollHeight, chatboxRef.current.scrollTop, chatboxRef.current.clientHeight);
@@ -35,7 +44,7 @@ socket.on('recieveChat',(data)=>{
       {chatList.map((data)=><li className={data.match && styles.match}>{data.senderName} {`--->  `} {data.mssg}</li>)}
       </div>
       <div className={styles.input_section}>
-      <textarea value={textData} onChange={(e)=>updateTextData(e.target.value)}>
+      <textarea value={textData} onChange={(e)=>updateText(e)} onKeyDown={handleKeyDown}>
       </textarea>
       <button onClick={emitSend}>Send</button>
       </div>
