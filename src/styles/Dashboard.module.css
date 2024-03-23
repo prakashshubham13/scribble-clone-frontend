@@ -6,15 +6,52 @@
     /* overflow-y: hidden; */
 }
 .row{
-    display: flex;
-    flex-direction: row;
+    /* display: flex; */
+    /* flex-direction: row; */
     /* background: red; */
+    display: grid;
+    gap: 10px;
+    grid-template-areas: 'player draw chat';
 }
 .column{
-    display: flex;
-    flex-direction: column;
+    /* display: flex;
+    flex-direction: column; */
     /* background: yellow; */
 }
 .column_s_e{
-    justify-content: space-between;
+    /* justify-content: space-between; */
 }
+.item{
+    /* background-color: red; */
+    /* display: flex; */
+    /* justify-content: center; */
+}
+@media only screen and (max-width: 600px) {
+    .row {
+        display: grid;
+        grid-template-areas: 'draw draw draw draw'
+        'player player chat chat';
+    }
+    .item1{
+        grid-area: player;
+        
+overflow: hidden;
+/* height: 20px;
+height: 20px; */
+/* background: red; */
+    }
+    .item2{
+        grid-area: draw;
+        /* height: 20px;
+height: 20px; */
+overflow: hidden;
+background: blue;
+    }
+    .item3{
+        grid-area: chat;
+        /* height: 20px;
+height: 20px; */
+overflow: hidden;
+background: green;
+    }
+  }

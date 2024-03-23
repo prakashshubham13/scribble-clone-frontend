@@ -1,18 +1,23 @@
 .drawbox_container{
-    width: 60%;
-    height: 50vh;
+    /* width: 70vh;
+    height: 80vh; */
     margin: 0 auto;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .canvas_container{
+    margin: auto;
     background: rgba(255,255,255,0.1);
+    background-color: blue;
     padding: auto;
     position: absolute;
     top: 0%;
     left: 0;
     z-index: 999;
-    width: 750px;
-    height: 400px;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -30,4 +35,10 @@
     background-color: greenyellow;
     border: #fff;
     box-shadow: 4px 4px 4px rgba(0,0,0,0.2),4px -4px 4px rgba(0,0,0,0.2),-4px 4px 4px rgba(0,0,0,0.2);
+}
+
+@media only screen and (max-width: 600px) {
+.drawbox_container{
+    height: 50vh;
+}
 }

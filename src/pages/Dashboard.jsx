@@ -23,7 +23,7 @@ const Dashboard = () => {
     if(!room || !name)
     navigate('/');
     return () => {
-    socket.emit("leaveRoom",{userId:socket.id,room:room});
+    socket.emit("leaveRoom",room);
     };
     }, []);
   return (
@@ -31,9 +31,9 @@ const Dashboard = () => {
       <div className={styles.column}>
       <Infobox/>
       <div className={`${styles.row} ${styles.column_s_e}`}>
-      <Playerbox socket={socket}/>
-      <Drawbox room={room} socket = {socket}/>
-      <Chatbox room={room} socket = {socket}/>
+      <div className={`${styles.item} ${styles.item1}`}><Playerbox socket={socket}/></div>
+      <div className={`${styles.item} ${styles.item2}`}><Drawbox room={room} socket = {socket}/></div>
+      <div className={`${styles.item} ${styles.item3}`}><Chatbox room={room} socket = {socket}/></div>
       </div>
       </div>
     </div>

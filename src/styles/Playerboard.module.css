@@ -1,4 +1,5 @@
 .playbox_container{
+    margin: auto;
     height: 80vh;
     width: 15vw;
     padding: 5px;
@@ -30,3 +31,10 @@
 .user{
     font-weight: 900;
 }
+@media only screen and (max-width: 600px) {
+    .playbox_container{
+        height: 35vh;
+        width: 50vw;
+        text-align: center;
+    }
+    }

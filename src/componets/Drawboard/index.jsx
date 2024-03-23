@@ -67,10 +67,19 @@ const Drawbox = ({room,socket}) => {
         if(!drawBoardRef.current) return;
         const canvas = drawBoardRef.current;
         const context = canvas.getContext('2d');
+        const { innerWidth: width, innerHeight: height } = window;
 
+        // canvas.width = 750;
+        // canvas.height = 400;
 
-        canvas.width = 750;
-        canvas.height = 400;
+        if (width <= 768) { // Mobile view
+            canvas.width = width * 0.8; // Example: 80% of the viewport width
+            canvas.height = height * 0.5; // Example: 50% of the viewport height
+          } else { // Desktop view
+            canvas.width = width * 0.6; // Example: 60% of the viewport width
+            canvas.height = height * 0.7; // Example: 70% of the viewport height
+          }
+    
 
         canvas.addEventListener('mousedown', handleMouseDown);
         canvas.addEventListener('mousemove', handleMouseMove);
@@ -101,6 +110,15 @@ image.onload = function() {
             console.log("select----",data.list);
             setShowSelectWord(data.list);
         });
+        
+        socket.on('clearCanvas',()=>{
+            context.clearRect(0,0,canvas.width,canvas.height);
+            drawDisableRef.current = true;
+        });
+
+        socket.on('draw',()=>{
+            drawDisableRef.current = false;
+        });
 
     },[]);
     const selectWord = (e,data) => {
@@ -121,12 +139,6 @@ image.onload = function() {
     }
     }, []);
 
-    useEffect(() => {
-    const canvas = drawBoardRef.current;
-    const context = canvas.getContext('2d');
-    context.clearRect(0,0,canvas.width,canvas.height);
-    drawDisableRef.current = !enableCanvas;
-    }, [enableCanvas]);
 
   return (
         /**
