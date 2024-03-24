@@ -49,13 +49,11 @@ height: 20px; */
         /* height: 20px;
 height: 20px; */
 overflow: hidden;
-background: blue;
     }
     .item3{
         grid-area: chat;
         /* height: 20px;
 height: 20px; */
 overflow: hidden;
-background: green;
     }
   }
