@@ -10,7 +10,6 @@
 .canvas_container{
     margin: auto;
     background: rgba(255,255,255,0.1);
-    background-color: blue;
     padding: auto;
     position: absolute;
     top: 0%;
@@ -39,6 +38,6 @@
 
 @media only screen and (max-width: 600px) {
 .drawbox_container{
-    height: 50vh;
+    height: 40vh;
 }
 }
