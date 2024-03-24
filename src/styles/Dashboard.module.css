@@ -27,6 +27,10 @@
     /* justify-content: center; */
 }
 @media only screen and (max-width: 600px) {
+    .dashboard_container{
+        height: 90vh;
+        overflow: hidden;
+    }
     .row {
         display: grid;
         grid-template-areas: 'draw draw draw draw'
