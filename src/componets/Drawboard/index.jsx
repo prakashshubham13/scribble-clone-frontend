@@ -45,17 +45,19 @@ const Drawbox = ({room,socket}) => {
 
 
     const handleMouseDown = (e) => {
+        
+        
         if(drawDisableRef.current) return;
         shouldDraw.current = true;
-        beginPath(e.clientX !== undefined ? e.offsetX : e.touches[0].clientX, e.clientY !== undefined ? e.offsetY : e.touches[0].clientY);
-        socket.emit('beginPath',{room: room, arg:{x: e.clientX !== undefined ? e.offsetX : e.touches[0].clientX, y:e.clientY !== undefined ? e.offsetY : e.touches[0].clientY}});
-    }
+        beginPath(e.clientX !== undefined ? e.offsetX : e.touches[0].clientX - e.currentTarget.getBoundingClientRect().left, e.clientY !== undefined ? e.offsetY : e.touches[0].clientY - e.currentTarget.getBoundingClientRect().top);
+        socket.emit('beginPath',{room: room, arg:{x: e.clientX !== undefined ? e.offsetX : e.touches[0].clientX - e.currentTarget.getBoundingClientRect().left, y:e.clientY !== undefined ? e.offsetY : e.touches[0].clientY - e.currentTarget.getBoundingClientRect().top}});
+        }
 
     const handleMouseMove = (e) => {
         if(drawDisableRef.current) return;
         if(!shouldDraw.current) return;
-        drawLine(e.clientX !== undefined ? e.offsetX : e.touches[0].clientX, e.clientY !== undefined ? e.offsetY : e.touches[0].clientY);
-        socket.emit('drawLine',{room: room, arg:{x: e.clientX !== undefined ? e.offsetX : e.touches[0].clientX, y:e.clientY !== undefined ? e.offsetY : e.touches[0].clientY}});
+        drawLine(e.clientX !== undefined ? e.offsetX : e.touches[0].clientX - e.currentTarget.getBoundingClientRect().left, e.clientY !== undefined ? e.offsetY : e.touches[0].clientY - e.currentTarget.getBoundingClientRect().top);
+        socket.emit('drawLine',{room: room, arg:{x: e.clientX !== undefined ? e.offsetX : e.touches[0].clientX - e.currentTarget.getBoundingClientRect().left, y:e.clientY !== undefined ? e.offsetY : e.touches[0].clientY - e.currentTarget.getBoundingClientRect().top}});
     }
 
     const handleMouseUp = (e) => {
