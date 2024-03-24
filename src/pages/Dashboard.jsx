@@ -23,7 +23,7 @@ const Dashboard = () => {
     if(!room || !name)
     navigate('/');
     return () => {
-    socket.emit("leaveRoom",room);
+    // socket.emit("leaveRoom",room);
     };
     }, []);
   return (
